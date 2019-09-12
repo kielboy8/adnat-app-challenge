@@ -1,24 +1,5 @@
-# README
+# Adnat Challenge - Ruby on Rails
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This repo contains my code for the Adnat Ruby on Rails Challenge which tasks to recreate a simplified version of Tanda's Web App using Ruby on Rails.
 
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+This is the initial README which would also be further added as soon as the app is finished.
