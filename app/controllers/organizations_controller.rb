@@ -1,14 +1,11 @@
 class OrganizationsController < ApplicationController
   before_action :set_organization, only: [:show, :edit, :update, :destroy]
+  before_action :require_user
 
   # GET /organizations
   # GET /organizations.json
   def index
-    if logged_in?
-      @organizations = Organization.all
-    else
-      redirect_to login_path
-    end
+    @organizations = Organization.all
   end
 
   # GET /organizations/1
@@ -30,28 +27,22 @@ class OrganizationsController < ApplicationController
   def create
     @organization = Organization.new(organization_params)
 
-    respond_to do |format|
-      if @organization.save
-        format.html { redirect_to @organization, notice: 'Organization was successfully created.' }
-        format.json { render :show, status: :created, location: @organization }
-      else
-        format.html { render :new }
-        format.json { render json: @organization.errors, status: :unprocessable_entity }
-      end
+    if @organization.save
+      flash[:notice] = "Organization was successfully created."
+      redirect_to organizations_path
+    else
+      render 'new'
     end
   end
 
   # PATCH/PUT /organizations/1
   # PATCH/PUT /organizations/1.json
   def update
-    respond_to do |format|
-      if @organization.update(organization_params)
-        format.html { redirect_to @organization, notice: 'Organization was successfully updated.' }
-        format.json { render :show, status: :ok, location: @organization }
-      else
-        format.html { render :edit }
-        format.json { render json: @organization.errors, status: :unprocessable_entity }
-      end
+    if @organization.update(organization_params)
+      flash[:notice] = "Organization was successfully updated."
+      redirect_to organizations_path
+    else
+      render 'edit'
     end
   end
 
@@ -59,10 +50,8 @@ class OrganizationsController < ApplicationController
   # DELETE /organizations/1.json
   def destroy
     @organization.destroy
-    respond_to do |format|
-      format.html { redirect_to organizations_url, notice: 'Organization was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    flash[:notice] = "Organization was successfully deleted."
+    redirect_to organizations_path
   end
 
   private

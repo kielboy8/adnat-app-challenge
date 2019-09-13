@@ -1,9 +1,8 @@
 Rails.application.routes.draw do
-  root 'organizations#index'
+  root 'sessions#new'
   resources :shifts
   get 'signup', to: 'users#new'
   resources :users, except: [:new]
-  get 'login', to: 'sessions#new'
   post 'login', to: 'sessions#create'
   delete 'logout', to: 'sessions#destroy'
   resources :organizations
