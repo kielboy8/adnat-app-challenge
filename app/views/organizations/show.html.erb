@@ -1,47 +1,62 @@
 <div class="row my-4">
   <div class="col">
-    <h1 class="display-5 font-weight-normal"><%= @organization.name %></h1>
+    <div class="d-inline-flex align-items-center">
+      <div class="mr-3">
+        <h1 class="display-5 font-weight-normal"><%= @organization.name %></h1>
+      </div>
+      <div>
+        <%= link_to 'New Shift', new_shift_path, class: "btn btn-primary" %>
+      </div>
+    </div>
   </div>
 </div>
 
-<h2 class="mb-4 font-weight-light">Shifts</h2>
-
-<table class="table">
-  <thead>
-    <tr>
-      <th>Employee Name</th>
-      <th>Date</th>
-      <th>Start</th>
-      <th>Finish</th>
-      <th>Break Length</th>
-      <th>Hours Worked</th>
-      <th>Shift Cost</th>
-      <th></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @organization.users.map do |user| %>
-    <% user.shifts.map do |shift| %>
-    <tr>
-      <td><%= User.find(shift.user_id).name %></td>
-      <td><%= shift.shift_date %></td>
-      <td><%= shift.start.strftime("%I:%M%p") %></td>
-      <td><%= shift.finish.strftime("%I:%M%p") %></td>
-      <td><%= shift.break_length %> mins</td>
-      <td></td>
-      <td></td>
-      <td><%= link_to 'Destroy', shift, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-    </tr>
-    <% end %>
-    <% end %>
-  </tbody>
-</table>
-
-<br>
-
-<%= link_to 'New Shift', new_shift_path %>
+<div class="row mb-4">
+  <div class="col">
+    <div class="mr-4">
+      <h2 class="font-weight-light">Shifts</h2>
+    </div>
+  </div>
+</div>
 
 
-<%= link_to 'Edit', edit_organization_path(@organization) %> |
-<%= link_to 'Leave', leave_path, method: :delete, data: { confirm: 'Are you sure? All your shifts will disappear.'} %>
+<div class="row">
+  <div class="col">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Employee Name</th>
+          <th>Date</th>
+          <th>Start</th>
+          <th>Finish</th>
+          <th>Break Length</th>
+          <th>Hours Worked</th>
+          <th>Shift Cost</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @organization.users.map do |user| %>
+        <% user.shifts.map do |shift| %>
+        <tr>
+          <td><%= User.find(shift.user_id).name %></td>
+          <td><%= shift.shift_date %></td>
+          <td><%= shift.start.strftime("%I:%M%p") %></td>
+          <td><%= shift.finish.strftime("%I:%M%p") %></td>
+          <td><%= shift.break_length %> mins</td>
+          <td><%= (shift.finish - shift.start) / 3600 %></td>
+          <td>$<%= @organization.hourly_rate * ((shift.finish - shift.start) / 3600) %></td>
+        </tr>
+        <% end %>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col">
+    <%= link_to 'Edit', edit_organization_path(@organization), class: "btn btn-success" %>
+    <%= link_to 'Leave', leave_path, method: :delete, data: { confirm: 'Are you sure? All your shifts will disappear.'}, class: "btn btn-danger" %>
+  </div>
+</div>
