@@ -1,10 +1,12 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
+  before_action :require_user, only: [:index, :edit, :update, :destroy]
+  before_action :require_same_user, only: [:edit, :update]
 
   # GET /users
   # GET /users.json
   def index
-    @users = User.all
+
   end
 
   # GET /users/1
@@ -19,6 +21,7 @@ class UsersController < ApplicationController
 
   # GET /users/1/edit
   def edit
+    
   end
 
   # POST /users
@@ -40,7 +43,11 @@ class UsersController < ApplicationController
   def update
     if @user.update(user_params)
       flash[:success] = "Your account was updated successfully."
-      redirect_to root_path
+      if current_user.organization_id != nil
+        redirect_to organization_path(current_user.organization_id)
+      elsif current_user.organization_id == nil
+        redirect_to organizations_path
+      end
     else
       render 'edit'
     end
@@ -65,6 +72,13 @@ class UsersController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
       params.require(:user).permit(:name, :email_address, :password)
+    end
+
+    def require_same_user
+      if current_user != @user
+        flash[:danger] = "You can only edit your own account."
+        redirect_to root_path
+      end
     end
         
 end

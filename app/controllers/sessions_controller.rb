@@ -1,6 +1,12 @@
 class SessionsController < ApplicationController
     def new
-
+        if logged_in? && current_user.organization_id != nil
+            redirect_to organization_path(current_user.organization_id)
+        elsif logged_in? && current_user.organization_id == nil
+            redirect_to organizations_path
+        else
+            @user = User.new
+        end
     end
 
     def create

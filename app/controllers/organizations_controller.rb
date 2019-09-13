@@ -37,6 +37,13 @@ class OrganizationsController < ApplicationController
 
   # GET /organizations/1/edit
   def edit
+    if current_user.organization_id == nil
+      flash[:notice] = "Join an organization first!"
+      redirect_to organizations_path    
+    elsif current_user.organization_id != @organization.id
+      flash[:notice] = "You cannot edit organizations you're not part of."
+      redirect_to organization_path(current_user.organization_id)
+    end
   end
 
   # POST /organizations

@@ -4,7 +4,8 @@ Rails.application.routes.draw do
   delete 'leave', to: 'join_organizations#destroy'
   resources :shifts, except: [:show]
   get 'signup', to: 'users#new'
-  resources :users, except: [:new, :index, :destroy]
+  resources :users, except: [:new, :index, :destroy, :show]
+  get 'login', to: 'sessions#new'
   post 'login', to: 'sessions#create'
   delete 'logout', to: 'sessions#destroy'
   resources :organizations, except: [:destroy]

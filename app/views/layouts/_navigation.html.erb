@@ -25,7 +25,6 @@
             Logged in as <%= current_user.name %>
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <%= link_to  "View your Profile", user_path(current_user), class: "dropdown-item" %>
             <%= link_to  "Edit your Profile", edit_user_path(current_user), class: "dropdown-item" %>
             <%= link_to  "Logout", logout_path, method: :delete, class: "dropdown-item" %>
           </div>

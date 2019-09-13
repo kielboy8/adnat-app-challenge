@@ -32,6 +32,7 @@
           <th>Break Length</th>
           <th>Hours Worked</th>
           <th>Shift Cost</th>
+          <th>Actions</th>
         </tr>
       </thead>
 
@@ -44,8 +45,12 @@
           <td><%= shift.start.strftime("%I:%M%p") %></td>
           <td><%= shift.finish.strftime("%I:%M%p") %></td>
           <td><%= shift.break_length %> mins</td>
-          <td><%= (shift.finish - shift.start) / 3600 %></td>
-          <td>$<%= @organization.hourly_rate * ((shift.finish - shift.start) / 3600) %></td>
+          <td><%= ((shift.finish - shift.start - (shift.break_length * 60)) / 3600).round(2) %></td>
+          <td>$<%= (@organization.hourly_rate * ((shift.finish - shift.start) / 3600)).round(2) %></td>
+          <td>
+            <%= link_to 'Edit', edit_shift_path(shift), class: "btn btn-success"%>
+            <%= link_to 'Delete', shift, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger" %>
+          </td>
         </tr>
         <% end %>
         <% end %>
@@ -54,9 +59,9 @@
   </div>
 </div>
 
-<div class="row">
+<div class="row my-4">
   <div class="col">
-    <%= link_to 'Edit', edit_organization_path(@organization), class: "btn btn-success" %>
-    <%= link_to 'Leave', leave_path, method: :delete, data: { confirm: 'Are you sure? All your shifts will disappear.'}, class: "btn btn-danger" %>
+    <%= link_to 'Edit Organization', edit_organization_path(@organization) %> | 
+    <%= link_to 'Leave Organization', leave_path, method: :delete, data: { confirm: 'Are you sure? All your shifts will disappear.'}%>
   </div>
 </div>

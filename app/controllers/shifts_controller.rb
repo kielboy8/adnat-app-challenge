@@ -5,7 +5,13 @@ class ShiftsController < ApplicationController
   # GET /shifts
   # GET /shifts.json
   def index
-    redirect_to organization_path(current_user.organization_id)
+    if current_user.organization_id != nil
+      flash[:notice] = "The page you're going to does not exist."
+      redirect_to organization_path(current_user.organization_id)
+    else
+      flash[:notice] = "You should be joined in an organization."
+      redirect_to organizations_path
+    end
   end
 
   # GET /shifts/new
@@ -34,14 +40,11 @@ class ShiftsController < ApplicationController
   # PATCH/PUT /shifts/1
   # PATCH/PUT /shifts/1.json
   def update
-    respond_to do |format|
-      if @shift.update(shift_params)
-        format.html { redirect_to @shift, notice: 'Shift was successfully updated.' }
-        format.json { render :show, status: :ok, location: @shift }
-      else
-        format.html { render :edit }
-        format.json { render json: @shift.errors, status: :unprocessable_entity }
-      end
+    if @shift.update(shift_params)
+      flash[:notice] = "Shift was successfully edited."
+      redirect_to organization_path(current_user.organization_id)
+    else
+      render 'edit'
     end
   end
 

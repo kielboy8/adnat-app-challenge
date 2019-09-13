@@ -1,7 +1,8 @@
 <%= form_with(model: @user, local: true) do |f| %>
 <% if @user.errors.any? %>
-<div class="row">
-  <div class="col">
+<div class="row ">
+  <div class="col"></div>
+  <div class="col-5">
     <div class="card border-danger bg-light">
       <div class="card-body">
         <div class="card-title text-danger">
@@ -15,10 +16,11 @@
       </div>
     </div>
   </div>
+  <div class="col"></div>
 </div>
 <% end %>
 
-<div class="row">
+<div class="row mt-4">
   <div class="col"></div>
   <div class="col-5">
     <div class="form-group">
