@@ -42,4 +42,4 @@ The code structure is also something that needs to be improved upon as each of t
 
 ## Deployment
 
-The link to the deployed application can be provided upon request.
+This application was deployed using Heroku and the link to the deployed application can be provided upon request.
