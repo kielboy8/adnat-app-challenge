@@ -6,9 +6,9 @@ This project was created using solely on Rails 6 with the front-end entirely on 
 
 ## Information
 
-This web application was created according to the specification provided from the back-end challenge instructions. It allows the user to login and create their account. Functionalities include the login and sign up for the user, the creation of organizations and shifts. 
+This web application was created according to the specification provided from the back-end challenge instructions. Functionalities include the login and sign up for the user, the creation of organizations and shifts. 
 
-Additional features include allowing the user to edit their own information and the editing and deletion of shifts.
+Additional features include, allowing the user to edit their own information and the editing and deletion of shifts.
 
 ## Installation and Setup
 
@@ -39,3 +39,7 @@ More features could have been implemented most especially allowing each user to 
 Also, organizations should be able to retain the information regarding the past shifts that were made in the organization by setting an organization ID for each shift since the generation of the shifts in the shifts table were only done through association calls which would disappear if the user left the organization.
 
 The code structure is also something that needs to be improved upon as each of the controllers look clogged with the logic that needs to be implemented and also making complete use of the scaffolds provided by Rails like the scaffolds generated to the controllers were replaced.
+
+## Deployment
+
+The link to the deployed application can be provided upon request.
