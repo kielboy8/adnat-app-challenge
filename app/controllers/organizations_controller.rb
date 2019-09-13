@@ -11,7 +11,6 @@ class OrganizationsController < ApplicationController
   # GET /organizations/1
   # GET /organizations/1.json
   def show
-    @shifts = Shift.all
     # user = User.all
     # @organization_users = @organization.user
   end

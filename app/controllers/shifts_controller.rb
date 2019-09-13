@@ -7,11 +7,6 @@ class ShiftsController < ApplicationController
     @shifts = Shift.all
   end
 
-  # GET /shifts/1
-  # GET /shifts/1.json
-  def show
-  end
-
   # GET /shifts/new
   def new
     @shift = Shift.new
@@ -24,9 +19,8 @@ class ShiftsController < ApplicationController
   # POST /shifts
   # POST /shifts.json
   def create
-    @user = current_user
+    @organization = Organization.find_by(id: current_user.organization_id)
     @shift = current_user.shifts.new(shift_params)
-
     if @shift.save
       flash[:notice] = "Shift was successfully created."
       redirect_to organizations_path
@@ -67,6 +61,6 @@ class ShiftsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def shift_params
-      params.require(:shift).permit(:user_id, :start, :finish, :break_length, :timestamps)
+      params.require(:shift).permit(:user_id, :organization_id, :start, :finish, :break_length, :timestamps)
     end
 end

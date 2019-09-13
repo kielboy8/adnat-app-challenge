@@ -26,16 +26,17 @@
   </thead>
 
   <tbody>
-    <% @shifts.each do |shift| %>
+    <% @organization.users.map do |user| %>
+    <% user.shifts.map do |shift| %>
     <tr>
       <td><%= User.find(shift.user_id).name %></td>
       <td><%= shift.start %></td>
       <td><%= shift.finish %></td>
       <td><%= shift.break_length %></td>
-      <td><%= link_to 'Show', shift %></td>
       <td><%= link_to 'Edit', edit_shift_path(shift) %></td>
       <td><%= link_to 'Destroy', shift, method: :delete, data: { confirm: 'Are you sure?' } %></td>
     </tr>
+    <% end %>
     <% end %>
   </tbody>
 </table>
