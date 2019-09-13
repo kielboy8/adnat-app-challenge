@@ -1,27 +1,44 @@
-<%= form_with(model: @organization, local: true) do |form| %>
-  <% if @organization.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@organization.errors.count, "error") %> prohibited this organization from being saved:</h2>
-
-      <ul>
-        <% @organization.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
-      </ul>
+<%= form_with(model: @organization, local: true) do |f| %>
+<% if @organization.errors.any? %>
+<div class="row">
+  <div class="col">
+    <div class="card border-danger bg-light">
+      <div class="card-body">
+        <div class="card-title text-danger">
+          <%= pluralize(@organization.errors.count, "error") %> prohibited this organization from being created:
+        </div>
+        <ul class="mb-2 list-unstyled">
+          <% @organization.errors.full_messages.each do |message| %>
+          <li class="text-danger"><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
     </div>
-  <% end %>
-
-  <div class="field">
-    <%= form.label :name %>
-    <%= form.text_field :name %>
   </div>
-
-  <div class="field">
-    <%= form.label :hourly_rate %>
-    <%= form.text_field :hourly_rate %>
-  </div>
-
-  <div class="actions">
-    <%= form.submit %>
-  </div>
+</div>
 <% end %>
+
+<div class="row mt-4">
+  <div class="col-3">
+    <div class="form-group">
+      <%= f.label :name, "Organization Name" %>
+      <%= f.text_field :name, class: "form-control" %>
+    </div>
+    
+    <div class="form-group">
+      <%= f.label :hourly_rate, "Hourly Rate" %>
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <div class="input-group-text">$</div>
+        </div>
+        <%= f.number_field :hourly_rate, min: 1, class: "form-control" %>
+      </div>
+    </div>
+    
+    <div class="form-group">
+      <%= f.submit class: "btn btn-primary" %>
+    </div>
+  </div>
+</div>
+<% end %>
+

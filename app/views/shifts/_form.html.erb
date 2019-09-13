@@ -1,32 +1,47 @@
 <%= form_with(model: shift, local: true) do |form| %>
-  <% if shift.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(shift.errors.count, "error") %> prohibited this shift from being saved:</h2>
-
-      <ul>
-        <% shift.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
-      </ul>
+<% if shift.errors.any? %>
+<div class="row">
+  <div class="col">
+    <div class="card border-danger bg-light">
+      <div class="card-body">
+        <div class="card-title text-danger">
+          <%= pluralize(shift.errors.count, "error") %> prohibited this shift from being created:
+        </div>
+        <ul class="mb-2 list-unstyled">
+          <% shift.errors.full_messages.each do |message| %>
+          <li class="text-danger"><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
     </div>
-  <% end %>
-
-  <div class="field">
-    <%= form.label :start %>
-    <%= form.datetime_select :start %>
   </div>
+</div>
+<% end %>
 
-  <div class="field">
-    <%= form.label :finish %>
-    <%= form.datetime_select :finish %>
-  </div>
+<div class="row mt-4">
+  <div class="col-5">
+    <div class="form-group">
+      <%= form.label :start, "Start time:" %>
+      <div class="form-inline">
+        <%= form.time_select :start, { minute_step: 5 }, { class: 'form-control mx-1' } %>
+      </div>
+    </div>
 
-  <div class="field">
-    <%= form.label :break_length %>
-    <%= form.number_field :break_length %>
-  </div>
+    <div class="form-group">
+      <%= form.label :finish, "Finish time:" %>
+      <div class="form-inline">
+        <%= form.time_select :finish, { minute_step: 5 }, { class: 'form-control mx-1' } %>
+      </div>
+    </div>
 
-  <div class="actions">
-    <%= form.submit %>
+    <div class="form-group">
+      <%= form.label :break_length, "Break length in minutes" %>
+      <%= form.number_field :break_length, min: 5, class: "form-control"  %>
+    </div>
+
+    <div class="form-group">
+      <%= form.submit class: "btn btn-primary" %>
+    </div>
   </div>
+</div>
 <% end %>

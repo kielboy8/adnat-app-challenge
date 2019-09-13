@@ -1,10 +1,11 @@
 class ShiftsController < ApplicationController
   before_action :set_shift, only: [:show, :edit, :update, :destroy]
+  before_action :require_user
 
   # GET /shifts
   # GET /shifts.json
   def index
-    @shifts = Shift.all
+    redirect_to organization_path(current_user.organization_id)
   end
 
   # GET /shifts/new
@@ -21,6 +22,7 @@ class ShiftsController < ApplicationController
   def create
     @organization = Organization.find_by(id: current_user.organization_id)
     @shift = current_user.shifts.new(shift_params)
+    @shift.shift_date = DateTime.now
     if @shift.save
       flash[:notice] = "Shift was successfully created."
       redirect_to organizations_path
@@ -47,10 +49,8 @@ class ShiftsController < ApplicationController
   # DELETE /shifts/1.json
   def destroy
     @shift.destroy
-    respond_to do |format|
-      format.html { redirect_to shifts_url, notice: 'Shift was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    flash[:notice] = "Shift was successfully deleted."
+    redirect_to organization_path(current_user.organization_id)
   end
 
   private
@@ -61,6 +61,6 @@ class ShiftsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def shift_params
-      params.require(:shift).permit(:user_id, :organization_id, :start, :finish, :break_length, :timestamps)
+      params.require(:shift).permit(:user_id, :organization_id, :shift_date, :start, :finish, :break_length, :timestamps)
     end
 end

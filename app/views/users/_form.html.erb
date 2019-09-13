@@ -1,48 +1,48 @@
+<%= form_with(model: @user, local: true) do |f| %>
 <% if @user.errors.any? %>
-<h2>The following errors prevent your account from being created.</h2>
-<ul>
-  <% @user.errors.full_messages.each do |msg| %>
-  <li>
-    <%= msg %>
-  </li>
-  <% end %>
-</ul>
+<div class="row">
+  <div class="col">
+    <div class="card border-danger bg-light">
+      <div class="card-body">
+        <div class="card-title text-danger">
+          <%= pluralize(@user.errors.count, "error") %> prohibited you from creating your account:
+        </div>
+        <ul class="mb-2 list-unstyled">
+          <% @user.errors.full_messages.each do |message| %>
+          <li class="text-danger"><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
 <% end %>
 
-<%= form_for(@user, :html => {role: "form"}) do |f| %>
-<div class="form-group row mt-4">
-  <div class="col-sm-2 col-form-label">
-    <%= f.label :name, "Username", class: "float-right font-weight-bold" %>
+<div class="row">
+  <div class="col"></div>
+  <div class="col-5">
+    <div class="form-group">
+      <%= f.label :name, "Name" %>
+      <%= f.text_field :name, class: "form-control", placeholder: "Enter your name" %>
+    </div>
+    <div class="form-group">
+      <%= f.label :email_address, "Email" %>
+      <%= f.email_field :email_address, class: "form-control", placeholder: "Enter your email" %>
+    </div>
+    <div class="form-group">
+      <%= f.label :password, "Password" %>
+      <%= f.password_field :password, class: "form-control", placeholder: "Enter your password", automcomplete: "off" %>
+    </div>
+    <div class="form-group">
+      <%= f.submit(@user.new_record? ? "Sign Up" : "Update account", class: "btn btn-primary") %>
+    </div>
   </div>
-  <div class="col-sm">
-    <%= f.text_field :name, class: "form-control", placeholder: "Enter Username" %>
-  </div>
-</div>
-<div class="form-group row mt-4">
-  <div class="col-sm-2 col-form-label">
-    <%= f.label :email_address, "Email", class: "float-right font-weight-bold"  %>
-  </div>
-  <div class="col-sm">
-    <%= f.email_field :email_address, class: "form-control", placeholder: "Enter email" %>
-  </div>
-</div>
-<div class="form-group row mt-4">
-  <div class="col-sm-2 col-form-label">
-    <%= f.label :password, "Password", class: "float-right font-weight-bold"  %>
-  </div>
-  <div class="col-sm">
-    <%= f.password_field :password, class: "form-control", placeholder: "Enter password" %>
-  </div>
-</div>
-<div class="form-group row mt-4">
-  <div class="col-sm-2 offset-sm-2">
-    <%= f.submit(@user.new_record? ? "Sign Up" : "Update account", class: "btn btn-primary") %>
-  </div>
+  <div class="col"></div>
 </div>
 <% end %>
 
 <div class="text-center mt-4">
-  <p class="lead">
+  <p>
     <%= link_to  "Back to home", root_path, class: "text-decoration-none" %>
   </p>
 </div>

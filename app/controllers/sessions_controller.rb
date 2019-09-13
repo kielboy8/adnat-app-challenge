@@ -1,5 +1,6 @@
 class SessionsController < ApplicationController
     def new
+
     end
 
     def create
@@ -7,7 +8,11 @@ class SessionsController < ApplicationController
         if user && user.authenticate(params[:session][:password])
             session[:user_id] = user.id
             flash[:success] = "You have successfully logged in."
-            redirect_to organizations_path
+            if user.organization_id != nil
+                redirect_to organization_path(user.organization_id)
+            else
+                redirect_to organizations_path
+            end
         else
             flash.now[:danger] = "There was something wrong with your login information."
             render 'new'

@@ -21,8 +21,9 @@ ActiveRecord::Schema.define(version: 2019_09_12_184609) do
 
   create_table "shifts", force: :cascade do |t|
     t.integer "user_id"
-    t.datetime "start"
-    t.datetime "finish"
+    t.date "shift_date"
+    t.time "start"
+    t.time "finish"
     t.integer "break_length"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false

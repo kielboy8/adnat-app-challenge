@@ -1,10 +1,12 @@
 Rails.application.routes.draw do
   root 'sessions#new'
-  resources :shifts
+  patch 'join', to: 'join_organizations#update'
+  delete 'leave', to: 'join_organizations#destroy'
+  resources :shifts, except: [:show]
   get 'signup', to: 'users#new'
-  resources :users, except: [:new]
+  resources :users, except: [:new, :index, :destroy]
   post 'login', to: 'sessions#create'
   delete 'logout', to: 'sessions#destroy'
-  resources :organizations
+  resources :organizations, except: [:destroy]
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end

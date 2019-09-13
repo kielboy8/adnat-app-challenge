@@ -1,7 +1,11 @@
+<% flash.each do |name, msg| %>
 <div class="row">
-  <% flash.each do |name, msg| %>
-  <ul>
-    <li><%= msg %></li>
-  </ul>
-  <% end %>
+  <div class="col">
+    <div class="card border-info bg-light">
+      <div class="card-body">
+        <span class="text-info"><%= msg %></span>
+      </div>
+    </div>
+  </div>
 </div>
+<% end %>

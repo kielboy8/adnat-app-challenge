@@ -5,19 +5,34 @@ class OrganizationsController < ApplicationController
   # GET /organizations
   # GET /organizations.json
   def index
+    if current_user.organization_id != nil
+      redirect_to organization_path(current_user.organization_id)
+    end
     @organizations = Organization.all
   end
 
   # GET /organizations/1
   # GET /organizations/1.json
   def show
+    if current_user.organization_id == nil
+      flash[:notice] = "Join an organization first!"
+      redirect_to organizations_path    
+    elsif current_user.organization_id != @organization.id
+      flash[:notice] = "You cannot visit organizations you're not part of."
+      redirect_to organization_path(current_user.organization_id)
+    end
     # user = User.all
     # @organization_users = @organization.user
   end
 
   # GET /organizations/new
   def new
-    @organization = Organization.new
+    if current_user.organization_id == nil
+      @organization = Organization.new
+    else
+      flash[:notice] = "You're already in an organization!"
+      redirect_to organization_path(current_user.organization_id)
+    end
   end
 
   # GET /organizations/1/edit

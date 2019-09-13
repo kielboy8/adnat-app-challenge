@@ -1,32 +1,41 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <!-- <a class="navbar-brand" href="#">Alpha Blog</a> -->
-  <% if logged_in?  %>
+  <div class="container">
+    <% if logged_in? && current_user.organization_id != nil %>
+    <%= link_to  "Adnat", organization_path(current_user.organization_id), class: "navbar-brand" %>
+    <% elsif logged_in?  %>
     <%= link_to  "Adnat", organizations_path, class: "navbar-brand" %>
-  <% else %>
+    <% else %>
     <%= link_to  "Adnat", root_path, class: "navbar-brand" %>
-  <% end %>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
+    <% end %>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
 
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto">
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
 
-    </ul>
-    <ul class="navbar-nav ml-auto">
-      <% if logged_in? %>
-      <li class="nav-item">
-        <%= link_to  "Logout", logout_path, method: :delete, class: "text-light" %>
-      </li>
-      <% else %>
-      <li class="nav-item">
-        <%= link_to  "Login", root_path, class: "text-light nav-link" %>
-      </li>
-      <li class="nav-item">
-        <%= link_to  "Sign Up", signup_path, class: "text-light nav-link" %>
-      </li>
-      <% end %>
-    </ul>
+      </ul>
+      <ul class="navbar-nav ml-auto">
+        <% if logged_in? %>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdown" role="button"
+            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Logged in as <%= current_user.name %>
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <%= link_to  "View your Profile", user_path(current_user), class: "dropdown-item" %>
+            <%= link_to  "Edit your Profile", edit_user_path(current_user), class: "dropdown-item" %>
+            <%= link_to  "Logout", logout_path, method: :delete, class: "dropdown-item" %>
+          </div>
+        </li>
+        <% else %>
+        <li class="nav-item">
+          <%= link_to "Sign Up", signup_path, class: "nav-link" %>
+        </li>
+        <% end %>
+      </ul>
+    </div>
   </div>
 </nav>
