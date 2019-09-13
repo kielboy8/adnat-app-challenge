@@ -1,37 +1,48 @@
-<%= form_with(model: user, local: true) do |form| %>
-  <% if user.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(user.errors.count, "error") %> prohibited this user from being saved:</h2>
-
-      <ul>
-        <% user.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
-      </ul>
-    </div>
+<% if @user.errors.any? %>
+<h2>The following errors prevent your account from being created.</h2>
+<ul>
+  <% @user.errors.full_messages.each do |msg| %>
+  <li>
+    <%= msg %>
+  </li>
   <% end %>
-
-  <div class="field">
-    <%= form.label :organization_id %>
-    <%= form.number_field :organization_id %>
-  </div>
-
-  <div class="field">
-    <%= form.label :name %>
-    <%= form.text_field :name %>
-  </div>
-
-  <div class="field">
-    <%= form.label :email_address %>
-    <%= form.text_field :email_address %>
-  </div>
-
-  <div class="field">
-    <%= form.label :password_digest %>
-    <%= form.text_field :password_digest %>
-  </div>
-
-  <div class="actions">
-    <%= form.submit %>
-  </div>
+</ul>
 <% end %>
+
+<%= form_for(@user, :html => {role: "form"}) do |f| %>
+<div class="form-group row mt-4">
+  <div class="col-sm-2 col-form-label">
+    <%= f.label :name, "Username", class: "float-right font-weight-bold" %>
+  </div>
+  <div class="col-sm">
+    <%= f.text_field :name, class: "form-control", placeholder: "Enter Username" %>
+  </div>
+</div>
+<div class="form-group row mt-4">
+  <div class="col-sm-2 col-form-label">
+    <%= f.label :email_address, "Email", class: "float-right font-weight-bold"  %>
+  </div>
+  <div class="col-sm">
+    <%= f.email_field :email_address, class: "form-control", placeholder: "Enter email" %>
+  </div>
+</div>
+<div class="form-group row mt-4">
+  <div class="col-sm-2 col-form-label">
+    <%= f.label :password, "Password", class: "float-right font-weight-bold"  %>
+  </div>
+  <div class="col-sm">
+    <%= f.password_field :password, class: "form-control", placeholder: "Enter password" %>
+  </div>
+</div>
+<div class="form-group row mt-4">
+  <div class="col-sm-2 offset-sm-2">
+    <%= f.submit(@user.new_record? ? "Sign Up" : "Update account", class: "btn btn-primary") %>
+  </div>
+</div>
+<% end %>
+
+<div class="text-center mt-4">
+  <p class="lead">
+    <%= link_to  "Back to home", root_path, class: "text-decoration-none" %>
+  </p>
+</div>

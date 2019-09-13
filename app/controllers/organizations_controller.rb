@@ -4,7 +4,11 @@ class OrganizationsController < ApplicationController
   # GET /organizations
   # GET /organizations.json
   def index
-    @organizations = Organization.all
+    if logged_in?
+      @organizations = Organization.all
+    else
+      redirect_to login_path
+    end
   end
 
   # GET /organizations/1
