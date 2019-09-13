@@ -24,16 +24,14 @@ class ShiftsController < ApplicationController
   # POST /shifts
   # POST /shifts.json
   def create
-    @shift = Shift.new(shift_params)
+    @user = current_user
+    @shift = current_user.shifts.new(shift_params)
 
-    respond_to do |format|
-      if @shift.save
-        format.html { redirect_to @shift, notice: 'Shift was successfully created.' }
-        format.json { render :show, status: :created, location: @shift }
-      else
-        format.html { render :new }
-        format.json { render json: @shift.errors, status: :unprocessable_entity }
-      end
+    if @shift.save
+      flash[:notice] = "Shift was successfully created."
+      redirect_to organizations_path
+    else
+      render 'new'
     end
   end
 

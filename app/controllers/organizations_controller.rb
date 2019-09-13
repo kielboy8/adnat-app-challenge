@@ -11,6 +11,9 @@ class OrganizationsController < ApplicationController
   # GET /organizations/1
   # GET /organizations/1.json
   def show
+    @shifts = Shift.all
+    # user = User.all
+    # @organization_users = @organization.user
   end
 
   # GET /organizations/new
@@ -26,9 +29,10 @@ class OrganizationsController < ApplicationController
   # POST /organizations.json
   def create
     @organization = Organization.new(organization_params)
-
     if @organization.save
       flash[:notice] = "Organization was successfully created."
+      current_user.organization_id = @organization.id
+      current_user.save
       redirect_to organizations_path
     else
       render 'new'
